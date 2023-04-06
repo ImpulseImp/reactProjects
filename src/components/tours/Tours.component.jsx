@@ -23,7 +23,39 @@ function Tours() {
     setIsLoading(false);
   }, []);
   if (isLoading) {
-    return <Loading />;
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
+  }
+  if (tours.length === 0) {
+    return (
+      <main>
+        <div className='title'>
+          <h2>no tours left</h2>
+          <button
+            type='button'
+            className='btn'
+            onClick={() => {
+              setIsLoading(true);
+              axios
+                .get(url)
+                .then((response) => {
+                  setTOurs(response.data);
+                  console.log(response.data);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+              setIsLoading(false);
+            }}
+          >
+            refresh
+          </button>
+        </div>
+      </main>
+    );
   }
   return (
     <main>
